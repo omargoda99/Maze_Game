@@ -9,7 +9,6 @@ public class Variables {
     static String[][] Maze2;
     static String[][] Maze3;
     static List<String[][]> Mazes = new ArrayList<>();
-
     static String[][] player1_Maze_copy;
     static String[][] player2_Maze_copy;
     static String[][] AI_Maze_copy;
