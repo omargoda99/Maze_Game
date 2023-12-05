@@ -1,5 +1,3 @@
-//package Maze;
-
 import com.sun.opengl.util.FPSAnimator;
 
 import javax.sound.sampled.*;
