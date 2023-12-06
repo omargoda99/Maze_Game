@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 public class Variables {
     public static File file = new File("src/qaof9-5iz1b.wav");
     public static AudioInputStream audioStream;
@@ -27,7 +28,7 @@ public class Variables {
         }
     }
     public static long clipTime;
-
+    public static FPSAnimator menu_Animator = new FPSAnimator(60);
     public static int current_Maze = 0;
     public static String[][] Maze1;
     public static String[][] Maze2;
@@ -39,7 +40,7 @@ public class Variables {
     public static String[][] Maze8;
     public static String[][] Maze9;
     public static List<List<String[][]>> Mazes = new ArrayList<>();
-    public static FPSAnimator animator = new FPSAnimator(30);
+    public static FPSAnimator game_Animator = new FPSAnimator(60);
     public static String[][] player1_Maze_copy;
     public static String[][] player2_Maze_copy;
     public static String[][] AI_Maze_copy;
@@ -48,16 +49,14 @@ public class Variables {
     public static int Num_Players = 0;
     public static String player1;
     public static String player2;
-    public static int x_Player1 = 1;
-    public static int y_Player1 = 1;
-    public static int x_Player2 = 1;
-    public static int y_Player2 = 1;
-    public static boolean player1_Collided = false;
-    public static boolean player2_Collided = false;
+    public static Cell x_Player1 = new Cell(1,1);
+    public static Cell x_Player2 = new Cell(1,1);
+    public static booleanVal player1_Collided = new booleanVal(false);
+    public static booleanVal player2_Collided = new booleanVal(false);
+    public static booleanVal player1_Win = new booleanVal(false);
+    public static booleanVal player2_Win = new booleanVal(false);
     public static int player1_Lives = 0;
     public static int player2_Lives = 0;
-    public static boolean player1_Win = false;
-    public static boolean player2_Win = false;
     public static int player1_HighScore = 0;
     public static int player2_HighScore = 0;
     public static boolean selectedAI = false;
@@ -71,5 +70,11 @@ public class Variables {
     public static int seconds = 0;
     public static int minutes = 0;
     public static int max_Minutes = 0;
-
+    public static boolean menu_disabled = false;
+}
+class booleanVal{
+    boolean exp;
+    booleanVal(boolean exp){
+        this.exp = exp;
+    }
 }
