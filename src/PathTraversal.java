@@ -112,7 +112,7 @@ public class PathTraversal {
         }
     }
     public static String[][] joinWorlds (String[][] MatA, String[][] MatB){
-        //Merge players' worlds into a single world to find postions:
+        //Merge players' worlds into a single world to find positions:
         String[][] ans = new String[MatA.length][MatB.length];
         for (int i = 0; i < MatA.length; i++) {
             for (int j = 0; j < MatB[0].length; j++) {
