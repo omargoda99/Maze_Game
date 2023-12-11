@@ -78,19 +78,22 @@ public class PathTraversal {
     }
 
     public static void validateMove(String[][] maze,
-                                    Cell current, booleanVal collided, booleanVal win, booleanVal valid) {
+                                    Cell current, booleanVal collided, booleanVal win) {
         if (maze[current.x][current.y].equals("W")) {
+            //Collided with a wall:
             collided.exp = true;
         } else if (maze[current.x][current.y].equals("E")) {
+            //Captured the star:
             win.exp = true;
         } else {
+            //Valid move so far:
             collided.exp = false;
             win.exp = false;
-            valid.exp = true;
         }
     }
 
     public static List<Cell> emptyCells(String[][] matrix) {
+        //Finding empty cells marked with "S":
         List<Cell> answer = new ArrayList<>();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -103,12 +106,14 @@ public class PathTraversal {
     }
 
     public static void deepCopy(String[][] MatA, String[][] MatB) {
+        //Copy a matrix A into a matrix B of the same size:
         for (int i = 0; i < MatA.length; i++) {
             System.arraycopy(MatA[i], 0, MatB[i], 0, MatB[0].length);
         }
     }
     public static String[][] joinWorlds (String[][] MatA, String[][] MatB){
-        String[][] ans = new String[10][10];
+        //Merge players' worlds into a single world to find postions:
+        String[][] ans = new String[MatA.length][MatB.length];
         for (int i = 0; i < MatA.length; i++) {
             for (int j = 0; j < MatB[0].length; j++) {
                 if(MatA[i][j].equals("P")||MatB[i][j].equals("P")){
