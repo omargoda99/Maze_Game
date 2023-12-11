@@ -1,3 +1,5 @@
+package Maze;
+
 import com.sun.opengl.util.FPSAnimator;
 
 import javax.sound.sampled.*;
@@ -29,7 +31,7 @@ public class Variables {
     }
 
     public static long clipTime;
-    public static FPSAnimator menu_Animator = new FPSAnimator(60);
+    public static FPSAnimator menu_Animator = new FPSAnimator(200);
     public static int current_Maze = 0;
     public static String[][] Maze1 = {
             {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
@@ -146,7 +148,7 @@ public class Variables {
     public static String[][] player1_Maze_Copy = new String[10][10];
     public static String[][] player2_Maze_Copy = new String[10][10];
     public static String[][] AI_Maze_Copy = new String[10][10];
-    public static FPSAnimator game_Animator = new FPSAnimator(60);
+    public static FPSAnimator game_Animator = new FPSAnimator(200);
     public static int levelSelection = -1;
     public static boolean selected_Mode = false;
     public static int Num_Players = 0;
@@ -181,8 +183,11 @@ public class Variables {
     public static List<Cell> spaces = new ArrayList<>();
     public static boolean trap_Generated = false;
     public static booleanVal validation = new booleanVal(false);
-
+    public static int randomizer = 0;
+    public static int AI_Step = 0;
     public static void re_Initialize() {
+        AI_Step = 0;
+        randomizer = 0;
         current_Maze = 0;
         levelSelection = -1;
         selected_Mode = false;
