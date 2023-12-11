@@ -1,5 +1,3 @@
-package Maze;
-
 import com.sun.opengl.util.FPSAnimator;
 
 import javax.sound.sampled.*;
@@ -182,7 +180,6 @@ public class Variables {
     public static boolean menu_disabled = false;
     public static List<Cell> spaces = new ArrayList<>();
     public static boolean trap_Generated = false;
-    public static booleanVal validation = new booleanVal(false);
     public static int randomizer = 0;
     public static int AI_Step = 0;
     public static void re_Initialize() {
@@ -217,7 +214,6 @@ public class Variables {
         player2_Collided.exp = false;
         spaces = new ArrayList<>();
         trap_Generated = false;
-        validation.exp = false;
         c_AI = new Cell(0, 0);
         path_AI = new ArrayList<>();
         AI_Maze_Copy = new String[10][10];
