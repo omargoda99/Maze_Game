@@ -82,6 +82,7 @@ public class gameFrame extends JFrame implements WindowListener {
 
 @SuppressWarnings({"ThrowablePrintedToSystemOut", "CallToPrintStackTrace"})
 class frameHelper implements GLEventListener, KeyListener, MouseListener {
+    double xCanvas = 0, yCanvas = 0;
     long score = 0, score2 = 0;
     int color = 1;
     int rotate = 0;
@@ -119,12 +120,259 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+    //Check if game is paused:
+        if (!Variables.stopped && Variables.levelSelection > -1) {
+            //Player1 moves if he has lives:
+            if (Variables.player1_Lives != 0) {
+                switch (e.getKeyCode()) {
+                    //Move left:
+                    case KeyEvent.VK_A:
+                        if (Variables.c_Player1.x > 0) {
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "S";
+                            Variables.c_Player1.x--;
+                            PathTraversal.validateMove(Variables.player1_Maze_Copy, Variables.c_Player1,
+                                    Variables.player1_Collided, Variables.player1_Win);
+                            if (Variables.player1_Collided.exp) {
+                                Variables.c_Player1.x++;
+                            }
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "P";
+                        }
+                        break;
+                    //Move up:
+                    case KeyEvent.VK_W:
+                        if (Variables.c_Player1.y > 0) {
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "S";
+                            Variables.c_Player1.y--;
+                            PathTraversal.validateMove(Variables.player1_Maze_Copy, Variables.c_Player1,
+                                    Variables.player1_Collided, Variables.player1_Win);
+                            if (Variables.player1_Collided.exp) {
+                                Variables.c_Player1.y++;
+                            }
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "P";
+                        }
+                        break;
+                    //Move right:
+                    case KeyEvent.VK_D:
+                        if (Variables.c_Player1.x < Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze).length - 1) {
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "S";
+                            Variables.c_Player1.x++;
+                            PathTraversal.validateMove(Variables.player1_Maze_Copy, Variables.c_Player1,
+                                    Variables.player1_Collided, Variables.player1_Win);
+                            if (Variables.player1_Collided.exp) {
+                                Variables.c_Player1.x--;
+                            }
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "P";
+                        }
+                        break;
+                    //Move down:
+                    case KeyEvent.VK_S:
+                        if (Variables.c_Player1.y < Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze)[0].length - 1) {
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "S";
+                            Variables.c_Player1.y++;
+                            PathTraversal.validateMove(Variables.player1_Maze_Copy, Variables.c_Player1,
+                                    Variables.player1_Collided, Variables.player1_Win);
+                            if (Variables.player1_Collided.exp) {
+                                Variables.c_Player1.y--;
+                            }
+                            Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "P";
+                        }
+                        break;
+                }
+            }
+            //Player2 moves if existent:
+            if (Variables.player2_Lives != 0) {
+                switch (e.getKeyCode()) {
+                    //Move left:
+                    case KeyEvent.VK_J:
+                        if (Variables.c_Player2.x > 0) {
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "S";
+                            Variables.c_Player2.x--;
+                            PathTraversal.validateMove(Variables.player2_Maze_Copy, Variables.c_Player2,
+                                    Variables.player2_Collided, Variables.player2_Win);
+                            if (Variables.player2_Collided.exp) {
+                                Variables.c_Player2.x++;
+                            }
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "P";
+                        }
+                        break;
+                    //Move up:
+                    case KeyEvent.VK_I:
+                        if (Variables.c_Player2.y > 0) {
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "S";
+                            Variables.c_Player2.y--;
+                            PathTraversal.validateMove(Variables.player2_Maze_Copy, Variables.c_Player2,
+                                    Variables.player2_Collided, Variables.player2_Win);
+                            if (Variables.player2_Collided.exp) {
+                                Variables.c_Player2.y++;
+                            }
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "P";
+                        }
+                        break;
+                    //Move right:
+                    case KeyEvent.VK_L:
+                        if (Variables.c_Player2.x < Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze).length - 1) {
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "S";
+                            Variables.c_Player2.x++;
+                            PathTraversal.validateMove(Variables.player2_Maze_Copy, Variables.c_Player2,
+                                    Variables.player2_Collided, Variables.player2_Win);
+                            if (Variables.player2_Collided.exp) {
+                                Variables.c_Player2.x--;
+                            }
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "P";
+                        }
+                        break;
+                    //Move down:
+                    case KeyEvent.VK_K:
+                        if (Variables.c_Player2.y < Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze)[0].length - 1) {
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "S";
+                            Variables.c_Player2.y++;
+                            PathTraversal.validateMove(Variables.player2_Maze_Copy, Variables.c_Player2,
+                                    Variables.player2_Collided, Variables.player2_Win);
+                            if (Variables.player2_Collided.exp) {
+                                Variables.c_Player2.y--;
+                            }
+                            Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "P";
+                        }
+                        break;
+                }
+            }
+            if (Variables.player1_Collided.exp || Variables.player2_Collided.exp) {
+                //A collision happened:
+                color = 2;
+                if (Variables.player1_Collided.exp && Variables.player1_Lives > 0) {
+                    //PLayer1 loses a life:
+                    Variables.player1_Lives--;
+                }
+                if (Variables.player2_Collided.exp && Variables.player2_Lives > 0) {
+                    //Player2 loses a life (That is... he is existent):
+                    Variables.player2_Lives--;
+                }
+                //Players lost because of lives:
+                if (Variables.player1_Lives == 0 && Variables.Num_Players == 1) {
+                    //Close the game it's a loss for a single player or Vs AI:
+                    Variables.re_Initialize();
+                    JOptionPane.showMessageDialog(null, "Losing game.",
+                            "Losing Game", JOptionPane.INFORMATION_MESSAGE);
+                    gameFrame.game.dispose();
+                } else if (Variables.Num_Players == 2) {
+                    if (Variables.player1_Lives == 0 && Variables.player2_Lives == 0) {
+                        //Close the game as Both players are unalive:
+                        Variables.re_Initialize();
+                        JOptionPane.showMessageDialog(null, "Losing game.",
+                                "Losing Game", JOptionPane.INFORMATION_MESSAGE);
+                        gameFrame.game.dispose();
+                    } else if (Variables.player1_Lives == 0) {
+                        //Turns into a single player for player2:
+                        Variables.player1_Maze_Copy[Variables.c_Player1.x][Variables.c_Player1.y] = "S";
+                    } else if (Variables.player2_Lives == 0) {
+                        //Turns into a single player for player1:
+                        Variables.player2_Maze_Copy[Variables.c_Player2.x][Variables.c_Player2.y] = "S";
+                    }
+                }
+            } else {
+                color = 1;
+            }
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+    //Single player:
+        if (Variables.player1_Win.exp && Variables.current_Maze == 2) {
+            //Game levels successfully passed by player1, save game data and re-initialize everything used:
+            if (Variables.player1 == null || Variables.player1.isEmpty()) {
+                Variables.player1 = "#N/A";
+            }
+            score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player1_Lives * 100L;
+            switch (Variables.levelSelection) {
+                case 0:
+                    if ((Variables.HighScores_Easy.get(Variables.player1) != null && Variables.HighScores_Easy.get(Variables.player1) < score)
+                            || Variables.HighScores_Easy.get(Variables.player1) == null) {
+                        Variables.HighScores_Easy.put(Variables.player1, score);
+                    }
+                    break;
+                case 1:
+                    if ((Variables.HighScores_Normal.get(Variables.player1) != null && Variables.HighScores_Normal.get(Variables.player1) < score)
+                            || Variables.HighScores_Normal.get(Variables.player1) == null) {
+                        Variables.HighScores_Normal.put(Variables.player1, score);
+                    }
+                    break;
+                case 2:
+                    if ((Variables.HighScores_Hard.get(Variables.player1) != null && Variables.HighScores_Hard.get(Variables.player1) < score)
+                            || Variables.HighScores_Hard.get(Variables.player1) == null) {
+                        Variables.HighScores_Hard.put(Variables.player1, score);
+                    }
+                    break;
+            }
+            Variables.re_Initialize();
+            JOptionPane.showMessageDialog(null, "Winning Game!"
+                    , "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.game.dispose();
+        } else if ((Variables.player1_Win.exp || Variables.player2_Win.exp)
+                && Variables.current_Maze < 2 && ((Variables.c_Player1.x != 1 && Variables.c_Player1.y != 1)
+                || (Variables.c_Player2.x != 1 && Variables.c_Player2.y != 1))) {
+            //Only current round passed initialize for next round:
+            Variables.game_Animator.stop();
+            Variables.current_Maze++;
+            Variables.c_Player1.x = 1;
+            Variables.c_Player1.y = 1;
+            if (Variables.player1_Win.exp) {
+                //Player1 Won:
+                score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player1_Lives * 100L;
+            } else if (Variables.player2_Win.exp) {
+                //Player2 Won:
+                score2 += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player2_Lives * 100L;
+            }
+            Variables.spaces = PathTraversal.emptyCells(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze));
+            PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.player1_Maze_Copy);
+            if (Variables.Num_Players == 2) {
+                //Initialize player2 next game:
+                Variables.c_Player2.x = 1;
+                Variables.c_Player2.y = 1;
+                PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.player2_Maze_Copy);
+            } else if (Variables.selectedAI) {
+                //Initialize AI next game:
+                Variables.c_AI.x = 1;
+                Variables.c_AI.y = 1;
+                PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.AI_Maze_Copy);
+                Variables.path_AI = PathTraversal.findPath(Variables.AI_Maze_Copy).
+                        get(PathTraversal.shortestPath(PathTraversal.findPath(Variables.AI_Maze_Copy)));
+                Variables.AI_Step = 0;
+            }
+            Variables.player1_Win.exp = false;
+            Variables.player2_Win.exp = false;
+            Variables.game_Animator.start();
+        } else if (Variables.player2_Win.exp && Variables.current_Maze == 2) {
+            //Game levels successfully passed by player2, save game data and re-initialize everything used:
+            if (Variables.player2 == null || Variables.player2.isEmpty()) {
+                Variables.player2 = "#N/A";
+            }
+            score2 += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player2_Lives * 100L;
+            switch (Variables.levelSelection) {
+                case 0:
+                    if ((Variables.HighScores_Easy.get(Variables.player2) != null && Variables.HighScores_Easy.get(Variables.player2) < score)
+                            || Variables.HighScores_Easy.get(Variables.player2) == null) {
+                        Variables.HighScores_Easy.put(Variables.player2, score);
+                    }
+                    break;
+                case 1:
+                    if ((Variables.HighScores_Normal.get(Variables.player2) != null && Variables.HighScores_Normal.get(Variables.player2) < score)
+                            || Variables.HighScores_Normal.get(Variables.player2) == null) {
+                        Variables.HighScores_Normal.put(Variables.player2, score);
+                    }
+                    break;
+                case 2:
+                    if ((Variables.HighScores_Hard.get(Variables.player2) != null && Variables.HighScores_Hard.get(Variables.player2) < score)
+                            || Variables.HighScores_Hard.get(Variables.player2) == null) {
+                        Variables.HighScores_Hard.put(Variables.player2, score);
+                    }
+                    break;
+            }
+            Variables.re_Initialize();
+            JOptionPane.showMessageDialog(null, "Winning Game!"
+                    , "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.game.dispose();
+        }
     }
 
     @Override
@@ -382,7 +630,42 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        double x = e.getX();
+        double y = e.getY();
+        Component c = e.getComponent();
+        double width = c.getWidth();
+        double height = c.getHeight();
+        /* Eq to switch from JFrame with 0 <= x <= width, and 0 <= y <= height
+        to GLCanvas with -x` <= xc <= x`, and -y` <= yc <= y` is:
+        xc = (2*x*x`/width)-x`, and yc = y`-(2*y*y`/height). */
+        xCanvas = (2 * x / width) - 1;
+        yCanvas = 1 - (2 * y / height);
+        //Stop:
+        if (xCanvas <= -0.66 && xCanvas >= -0.84 && yCanvas <= 0.93 && yCanvas >= 0.75) {
+            if (!Variables.stopped) {
+                Variables.stopped = true;
+                Variables.elapsed = Variables.seconds;
+                Variables.muted = true;
+                Variables.clipTime = Variables.clip.getMicrosecondPosition();
+                Variables.clip.stop();
+            } else {
+                Variables.start_Time = System.currentTimeMillis();
+                Variables.stopped = false;
+                Variables.game_Animator.start();
+            }
+        } else if (xCanvas <= -0.38 && x >= -0.6 && yCanvas >= 0.76 && yCanvas <= 0.93) {
+            //Mute:
+            if (!Variables.muted) {
+                Variables.muted = true;
+                Variables.clipTime = Variables.clip.getMicrosecondPosition();
+                Variables.clip.stop();
+            } else {
+                //Unmute:
+                Variables.muted = false;
+                Variables.clip.setMicrosecondPosition(Variables.clipTime);
+                Variables.clip.start();
+            }
+        }
     }
 
     @Override
