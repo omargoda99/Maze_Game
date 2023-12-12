@@ -450,7 +450,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             }
             //Player2 info:
             gameFrame.player2lives.setText("Lives: " + Variables.player2_Lives + ".");
-            gameFrame.score.setText("Score: " + Variables.player2_Score + ".");
+            gameFrame.player2score.setText("Score: " + Variables.player2_Score + ".");
             if (Variables.player2 == null || Variables.player2.isEmpty()) {
                 gameFrame.player2Name.setText("Player2 Name: #N/A.");
             } else {
