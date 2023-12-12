@@ -100,8 +100,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.AI_Maze_Copy);
             Variables.c_AI.x = 1;
             Variables.c_AI.y = 1;
-            Variables.path_AI = PathTraversal.findPath(Variables.AI_Maze_Copy).
-                    get(PathTraversal.shortestPath(PathTraversal.findPath(Variables.AI_Maze_Copy)));
+            Variables.path_AI = PathTraversal.findPath(Variables.AI_Maze_Copy);
             Variables.AI_Step = 0;
             Variables.randomizer = 0;
         } else if (Variables.Num_Players == 2) {
@@ -335,8 +334,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
                 Variables.c_AI.x = 1;
                 Variables.c_AI.y = 1;
                 PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.AI_Maze_Copy);
-                Variables.path_AI = PathTraversal.findPath(Variables.AI_Maze_Copy).
-                        get(PathTraversal.shortestPath(PathTraversal.findPath(Variables.AI_Maze_Copy)));
+                Variables.path_AI = PathTraversal.findPath(Variables.AI_Maze_Copy);
                 Variables.AI_Step = 0;
             }
             Variables.player1_Win.exp = false;
