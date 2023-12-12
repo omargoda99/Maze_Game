@@ -161,8 +161,8 @@ public class Variables {
     public static booleanVal player2_Win = new booleanVal(false);
     public static int player1_Lives = 0;
     public static int player2_Lives = 0;
-    public static int player1_Score = 0;
-    public static int player2_Score = 0;
+    public static long player1_Score = 0;
+    public static long player2_Score = 0;
     public static Map<String, Long> HighScores_Easy = new HashMap<>();
     public static Map<String, Long> HighScores_Normal = new HashMap<>();
     public static Map<String, Long> HighScores_Hard = new HashMap<>();
