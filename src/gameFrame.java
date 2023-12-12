@@ -349,7 +349,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
         } else if (Variables.player2_Win.exp && Variables.current_Maze == 2) {
             //Game levels successfully passed by player2, save game data and re-initialize everything used:
             if (Variables.player2 == null || Variables.player2.isEmpty()) {
-                Variables.player2 = "#N/A";
+                Variables.player2 = "#N/A2";
             }
             Variables.player2_Score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100
                     + Variables.player2_Lives * 100L;
@@ -458,7 +458,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             gameFrame.player2lives.setText("Lives: " + Variables.player2_Lives + ".");
             gameFrame.player2score.setText("Score: " + Variables.player2_Score + ".");
             if (Variables.player2 == null || Variables.player2.isEmpty()) {
-                gameFrame.player2Name.setText("Player2 Name: #N/A.");
+                gameFrame.player2Name.setText("Player2 Name: #N/A2.");
             } else {
                 gameFrame.player2Name.setText("Player2 Name: " + Variables.player2 + ".");
             }
