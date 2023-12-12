@@ -81,7 +81,8 @@ class GLMenu implements GLEventListener, MouseListener {
             "volume_318-757784.png", "mute-png-mute-icon-1600.png",
             "InShot_20231205_163350314.png", "InShot_20231205_163400478.png",
             "InShot_20231205_163410601.png", "InShot_20231208_113813061.png",
-            "InShot_20231208_113826914.png", "InShot_20231208_113836297.png"};
+            "InShot_20231208_113826914.png", "InShot_20231208_113836297.png",
+            "InShot_20231212_150551743.png"};
     TextureReader.Texture[] texture = new TextureReader.Texture[textureNames.length];
     int[] textures = new int[textureNames.length];
 
@@ -138,6 +139,8 @@ class GLMenu implements GLEventListener, MouseListener {
             //Hard
             drawAssets(gl, 10, 0.5, -0.1, 0.15);
         }
+        //Back:
+        drawAssets(gl, 14, 0.5, 0.7, 0.1);
         //Instructions:
         drawAssets(gl, 5, 0.5, -0.3, 0.15);
         //HighScores ُEasy:
@@ -196,7 +199,7 @@ class GLMenu implements GLEventListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    double x = e.getX();
+     double x = e.getX();
         double y = e.getY();
         Component c = e.getComponent();
         double width = c.getWidth();
@@ -209,8 +212,12 @@ class GLMenu implements GLEventListener, MouseListener {
         if (Variables.menu_disabled) {
             xCanvas = 0;
             yCanvas = 0;
-        }
-        if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= 0.25 && yCanvas <= 0.33) {
+        } else if (xCanvas <= 0.58 && xCanvas >= 0.41 && yCanvas <= 0.73 && yCanvas >= 0.65) {
+            //Back:
+            Variables.menu_Animator.stop();
+            Variables.game_Animator.start();
+            Variables.re_Initialize();
+        } else if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= 0.25 && yCanvas <= 0.33) {
             //Modes:
             if (!Variables.selected_Mode) {
                 Variables.selected_Mode = true;
@@ -227,6 +234,8 @@ class GLMenu implements GLEventListener, MouseListener {
                 } else if (Variables.Num_Players == 1) {
                     Variables.player1 = JOptionPane.showInputDialog("Player1:");
                 }
+                gameFrame.game = new gameFrame();
+                Variables.menu_disabled = true;
             }
         } else if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= 0.066 && yCanvas <= 0.133) {
             if (!Variables.selected_Mode) {
@@ -245,6 +254,8 @@ class GLMenu implements GLEventListener, MouseListener {
                 } else if (Variables.Num_Players == 1) {
                     Variables.player1 = JOptionPane.showInputDialog("Player1:");
                 }
+                gameFrame.game = new gameFrame();
+                Variables.menu_disabled = true;
             }
         } else if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= -0.133 && yCanvas <= -0.066) {
             if (!Variables.selected_Mode) {
@@ -264,6 +275,8 @@ class GLMenu implements GLEventListener, MouseListener {
                 } else if (Variables.Num_Players == 1) {
                     Variables.player1 = JOptionPane.showInputDialog("Player1:");
                 }
+                gameFrame.game = new gameFrame();
+                Variables.menu_disabled = true;
             }
         } else if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= -0.33 && yCanvas <= -0.25) {
             //Instructions:
@@ -372,11 +385,6 @@ class GLMenu implements GLEventListener, MouseListener {
             while (!players_Scores.isEmpty()) {
                 players_Scores.deleteCharAt(0);
             }
-        }
-        if (Variables.levelSelection > -1) {
-            //initialize the game frame:
-            gameFrame.game = new gameFrame();
-            Variables.menu_disabled = true;
         }
     }
 
