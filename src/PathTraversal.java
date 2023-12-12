@@ -11,11 +11,10 @@ class Cell {
 
 @SuppressWarnings("ClassEscapesDefinedScope")
 public class PathTraversal {
-    public static List<List<Cell>> findPath(String[][] matrix) {
+    public static List<Cell> findPath(String[][] matrix) {
         // For simpler reading:
         int rows = matrix.length;
         int cols = matrix[0].length;
-        List<List<Cell>> allPAth = new ArrayList<>();
         // Valid moves:
         int[][] directions = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
@@ -42,7 +41,7 @@ public class PathTraversal {
                     path.addFirst(curr); // Adding cells in reverse order.
                     curr = parent.get(curr); // Get the previous cell in position.
                 }
-                allPAth.add(path);
+                return path;
             }
 
             // Mark Cell pop-ed from the stack as Visited:
@@ -63,20 +62,8 @@ public class PathTraversal {
                 }
             }
         }
-        return allPAth;
+        return null;
     }
-    public static int shortestPath (List<List<Cell>> paths){
-        int max = 0;
-        int index = 0;
-        for(int i =0;i<paths.size();i++){
-            if(paths.get(i).size()>max){
-                max = paths.get(i).size();
-                index = i;
-            }
-        }
-        return index;
-    }
-
     public static void validateMove(String[][] maze,
                                     Cell current, booleanVal collided, booleanVal win) {
         if (maze[current.x][current.y].equals("W")) {
