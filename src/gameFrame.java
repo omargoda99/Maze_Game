@@ -107,7 +107,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             Variables.c_Player2.x = 1;
             Variables.c_Player2.y = 1;
         }
-        Variables.spaces = PathTraversal.emptyCells(Variables.player1_Maze_Copy);
+        Variables.spaces = PathTraversal.emptyCells(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze));
         Variables.start_Time = System.currentTimeMillis();
     }
 
