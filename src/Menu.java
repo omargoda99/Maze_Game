@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("InfiniteLoopStatement")
 public class Menu extends JFrame {
     public static void main(String[] args) throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException, InterruptedException {
+            IOException, LineUnavailableException {
         //Put the mazes in place.
         Variables.easy.add(Variables.Maze1);
         Variables.easy.add(Variables.Maze2);
@@ -33,7 +33,6 @@ public class Menu extends JFrame {
         Variables.Mazes.add(Variables.normal);
         Variables.Mazes.add(Variables.hard);
         new Menu();
-        Thread.sleep(4000); //Let the frame take time to bind so the song begins normally.
         Variables.clip.open(Variables.audioStream);
         Variables.clip.start();
         //loop the clip:
