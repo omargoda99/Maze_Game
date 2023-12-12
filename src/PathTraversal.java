@@ -20,9 +20,20 @@ public class PathTraversal {
 
         //For the Algorithm:
         Stack<Cell> stack = new Stack<>();
-        Cell start = new Cell(1, 1);
+        Cell start = null;
         boolean[][] visited = new boolean[rows][cols];
-
+        
+        // Find the starting point
+        outerLoop:
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j].equals("P")) {
+                    start = new Cell(i, j);
+                    break outerLoop;
+                }
+            }
+        }
+        
         //initialization:
         stack.push(start);
         Map<Cell, Cell> parent = new HashMap<>();
