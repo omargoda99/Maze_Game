@@ -579,7 +579,6 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             //Resume:
             drawAssets(gl, 6, -0.75, 0.85, 0.08);
             Variables.seconds = Variables.elapsed;
-            Variables.game_Animator.stop();
         }
         if (Variables.seconds == 60) {
             Variables.seconds = 0;
@@ -590,7 +589,9 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
         //Set the timer label:
         gameFrame.timer.setText("Timer: " + Variables.minutes + " Minutes, And " + Variables.seconds + " Seconds.");
         //rotate the star:
-        rotate = (1 + rotate) % 360;
+        if (!Variables.stopped) {
+            rotate = (1 + rotate) % 360;
+        }
         //lost against AI or because of time:
         if ((Variables.minutes == Variables.max_Minutes || (Variables.selectedAI && Variables.path_AI.size() == Variables.AI_Step))
                 && Variables.levelSelection > -1) {
@@ -679,7 +680,6 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             } else {
                 Variables.start_Time = System.currentTimeMillis();
                 Variables.stopped = false;
-                Variables.game_Animator.start();
             }
         } else if (xCanvas <= -0.38 && x >= -0.6 && yCanvas >= 0.76 && yCanvas <= 0.93) {
             //Mute:
