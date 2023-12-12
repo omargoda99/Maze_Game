@@ -280,7 +280,7 @@ class GLMenu implements GLEventListener, MouseListener {
             }
         } else if (xCanvas <= 0.66 && xCanvas >= 0.36 && yCanvas >= -0.33 && yCanvas <= -0.25) {
             //Instructions:
-            JOptionPane.showMessageDialog(null, """
+            JOptionPane.showMessageDialog(null,"""
                             The_Maze is a 2D game consisting of 3 level selections:
                                                         
                             Easy, Normal, and Hard with 3 different rounds for each.
@@ -293,12 +293,11 @@ class GLMenu implements GLEventListener, MouseListener {
                                                         
                             Losing conditions: Wasted lives by collision with walls, Reaching max time,
                             Or not being the first to capture the star (Applies only in Vs AI and Multi).
-                                                        
-                            If a player died in a multiplayer game the maze becomes unsafe (Red)
-                            Hence making it hard to know when a collision happens for the other player
-                            the maze also becomes unsafe if a collision happened until the player who
-                            collided moves correctly, also in multi player:
-                            The player ending the last round first is considered the winner.
+                            
+                            If a collision happened the maze becomes red (unsafe) until the player moves
+                            (Or any player moves in Multi player not in VS AI tho).
+                            
+                            The player ending the last round first is considered the ultimate winner.
                                                         
                             A wall randomly appears every 2 seconds as a trap
                             (Not necessarily at the first step when playing VS AI)
