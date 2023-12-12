@@ -83,7 +83,6 @@ public class gameFrame extends JFrame implements WindowListener {
 @SuppressWarnings({"ThrowablePrintedToSystemOut", "CallToPrintStackTrace"})
 class frameHelper implements GLEventListener, KeyListener, MouseListener {
     double xCanvas = 0, yCanvas = 0;
-    long score = 0, score2 = 0;
     int color = 1;
     int rotate = 0;
     String[] textureNames = {"black-square-clipart-8.png", "blue-square-png-13.png", "red-square-png-14.png", "volume_318-757784.png",
@@ -109,7 +108,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             Variables.c_Player2.y = 1;
         }
         Variables.spaces = PathTraversal.emptyCells(Variables.player1_Maze_Copy);
-        Variables.start_Time = System.currentTimeMillis() + 2500;
+        Variables.start_Time = System.currentTimeMillis();
     }
 
     @Override
@@ -119,7 +118,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-    //Check if game is paused:
+   //Check if game is paused:
         if (!Variables.stopped && Variables.levelSelection > -1) {
             //Player1 moves if he has lives:
             if (Variables.player1_Lives != 0) {
@@ -241,10 +240,12 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
                 if (Variables.player1_Collided.exp && Variables.player1_Lives > 0) {
                     //PLayer1 loses a life:
                     Variables.player1_Lives--;
+                    Variables.player1_Collided.exp = false;
                 }
                 if (Variables.player2_Collided.exp && Variables.player2_Lives > 0) {
                     //Player2 loses a life (That is... he is existent):
                     Variables.player2_Lives--;
+                    Variables.player2_Collided.exp = false;
                 }
                 //Players lost because of lives:
                 if (Variables.player1_Lives == 0 && Variables.Num_Players == 1) {
@@ -276,30 +277,34 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-    //Single player:
+ //Single player:
         if (Variables.player1_Win.exp && Variables.current_Maze == 2) {
             //Game levels successfully passed by player1, save game data and re-initialize everything used:
             if (Variables.player1 == null || Variables.player1.isEmpty()) {
                 Variables.player1 = "#N/A";
             }
-            score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player1_Lives * 100L;
+            Variables.player1_Score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100
+                    + Variables.player1_Lives * 100L;
             switch (Variables.levelSelection) {
                 case 0:
-                    if ((Variables.HighScores_Easy.get(Variables.player1) != null && Variables.HighScores_Easy.get(Variables.player1) < score)
+                    if ((Variables.HighScores_Easy.get(Variables.player1) != null &&
+                            Variables.HighScores_Easy.get(Variables.player1) < Variables.player1_Score)
                             || Variables.HighScores_Easy.get(Variables.player1) == null) {
-                        Variables.HighScores_Easy.put(Variables.player1, score);
+                        Variables.HighScores_Easy.put(Variables.player1, Variables.player1_Score);
                     }
                     break;
                 case 1:
-                    if ((Variables.HighScores_Normal.get(Variables.player1) != null && Variables.HighScores_Normal.get(Variables.player1) < score)
+                    if ((Variables.HighScores_Normal.get(Variables.player1) != null &&
+                            Variables.HighScores_Normal.get(Variables.player1) < Variables.player1_Score)
                             || Variables.HighScores_Normal.get(Variables.player1) == null) {
-                        Variables.HighScores_Normal.put(Variables.player1, score);
+                        Variables.HighScores_Normal.put(Variables.player1, Variables.player1_Score);
                     }
                     break;
                 case 2:
-                    if ((Variables.HighScores_Hard.get(Variables.player1) != null && Variables.HighScores_Hard.get(Variables.player1) < score)
+                    if ((Variables.HighScores_Hard.get(Variables.player1) != null &&
+                            Variables.HighScores_Hard.get(Variables.player1) < Variables.player1_Score)
                             || Variables.HighScores_Hard.get(Variables.player1) == null) {
-                        Variables.HighScores_Hard.put(Variables.player1, score);
+                        Variables.HighScores_Hard.put(Variables.player1, Variables.player1_Score);
                     }
                     break;
             }
@@ -317,10 +322,12 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             Variables.c_Player1.y = 1;
             if (Variables.player1_Win.exp) {
                 //Player1 Won:
-                score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player1_Lives * 100L;
+                Variables.player1_Score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100
+                        + Variables.player1_Lives * 100L;
             } else if (Variables.player2_Win.exp) {
                 //Player2 Won:
-                score2 += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player2_Lives * 100L;
+                Variables.player2_Score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100
+                        + Variables.player2_Lives * 100L;
             }
             Variables.spaces = PathTraversal.emptyCells(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze));
             PathTraversal.deepCopy(Variables.Mazes.get(Variables.levelSelection).get(Variables.current_Maze), Variables.player1_Maze_Copy);
@@ -345,24 +352,28 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             if (Variables.player2 == null || Variables.player2.isEmpty()) {
                 Variables.player2 = "#N/A";
             }
-            score2 += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100 + Variables.player2_Lives * 100L;
+            Variables.player2_Score += (Variables.max_Minutes * 60 - Variables.minutes * 60 - Variables.seconds) * 100
+                    + Variables.player2_Lives * 100L;
             switch (Variables.levelSelection) {
                 case 0:
-                    if ((Variables.HighScores_Easy.get(Variables.player2) != null && Variables.HighScores_Easy.get(Variables.player2) < score)
+                    if ((Variables.HighScores_Easy.get(Variables.player2) != null &&
+                            Variables.HighScores_Easy.get(Variables.player2) < Variables.player2_Score)
                             || Variables.HighScores_Easy.get(Variables.player2) == null) {
-                        Variables.HighScores_Easy.put(Variables.player2, score);
+                        Variables.HighScores_Easy.put(Variables.player2, Variables.player2_Score);
                     }
                     break;
                 case 1:
-                    if ((Variables.HighScores_Normal.get(Variables.player2) != null && Variables.HighScores_Normal.get(Variables.player2) < score)
+                    if ((Variables.HighScores_Normal.get(Variables.player2) != null &&
+                            Variables.HighScores_Normal.get(Variables.player2) < Variables.player2_Score)
                             || Variables.HighScores_Normal.get(Variables.player2) == null) {
-                        Variables.HighScores_Normal.put(Variables.player2, score);
+                        Variables.HighScores_Normal.put(Variables.player2, Variables.player2_Score);
                     }
                     break;
                 case 2:
-                    if ((Variables.HighScores_Hard.get(Variables.player2) != null && Variables.HighScores_Hard.get(Variables.player2) < score)
+                    if ((Variables.HighScores_Hard.get(Variables.player2) != null &&
+                            Variables.HighScores_Hard.get(Variables.player2) < Variables.player2_Score)
                             || Variables.HighScores_Hard.get(Variables.player2) == null) {
-                        Variables.HighScores_Hard.put(Variables.player2, score);
+                        Variables.HighScores_Hard.put(Variables.player2, Variables.player2_Score);
                     }
                     break;
             }
@@ -412,7 +423,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
         //The Game:
         //info about player1:
         gameFrame.lives.setText("Lives: " + Variables.player1_Lives + ".");
-        gameFrame.score.setText("Score: " + score + ".");
+        gameFrame.score.setText("Score: " + Variables.player1_Score + ".");
         if (Variables.player1 == null || Variables.player1.isEmpty()) {
             gameFrame.playerName.setText("Player1 Name: #N/A.");
         } else {
@@ -440,7 +451,7 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
             }
             //Player2 info:
             gameFrame.player2lives.setText("Lives: " + Variables.player2_Lives + ".");
-            gameFrame.player2score.setText("Score: " + score2 + ".");
+            gameFrame.score.setText("Score: " + Variables.player2_Score + ".");
             if (Variables.player2 == null || Variables.player2.isEmpty()) {
                 gameFrame.player2Name.setText("Player2 Name: #N/A.");
             } else {
@@ -495,11 +506,15 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
                 Variables.spaces = PathTraversal.emptyCells(PathTraversal.joinWorlds(Variables.player1_Maze_Copy, Variables.player2_Maze_Copy));
                 Variables.randomizer = (int) ((Math.random()) * Variables.spaces.size());
                 Variables.trap_Generated = true;
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
-                Variables.player2_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                    Variables.player2_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                }
             } else if (Variables.seconds % 2 == 1 && Variables.trap_Generated) {
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
-                Variables.player2_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                    Variables.player2_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                }
                 Variables.trap_Generated = false;
             }
         } else if (!Variables.selectedAI && Variables.levelSelection > -1) {
@@ -508,9 +523,13 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
                 Variables.spaces = PathTraversal.emptyCells(Variables.player1_Maze_Copy);
                 Variables.randomizer = (int) ((Math.random()) * Variables.spaces.size());
                 Variables.trap_Generated = true;
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                }
             } else if (Variables.seconds % 2 == 1 && Variables.trap_Generated) {
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                }
                 Variables.trap_Generated = false;
             }
         } else {
@@ -519,14 +538,20 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
                 Variables.spaces = PathTraversal.emptyCells(PathTraversal.joinWorlds(Variables.player1_Maze_Copy, Variables.AI_Maze_Copy));
                 Variables.randomizer = (int) ((Math.random()) * Variables.spaces.size());
                 Variables.trap_Generated = true;
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
-                if (!Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y].equals("P")) {
-                    Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                    if (!Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x]
+                            [Variables.spaces.get(Variables.randomizer).y].equals("P")) {
+                        Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "W";
+                    }
                 }
             } else if (Variables.seconds % 2 == 1 && Variables.trap_Generated) {
-                Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
-                if (!Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y].equals("P")) {
-                    Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                if (Variables.spaces.size() - 1 > Variables.randomizer) {
+                    Variables.player1_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                    if (!Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x]
+                            [Variables.spaces.get(Variables.randomizer).y].equals("P")) {
+                        Variables.AI_Maze_Copy[Variables.spaces.get(Variables.randomizer).x][Variables.spaces.get(Variables.randomizer).y] = "S";
+                    }
                 }
                 Variables.trap_Generated = false;
             }
