@@ -417,6 +417,12 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
         GL gl = glAutoDrawable.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
+        if (Variables.Num_Players == 1) {
+            //No info needed about 2nd player:
+            gameFrame.player2Name.setText("");
+            gameFrame.player2lives.setText("");
+            gameFrame.player2score.setText("");
+        }
         //Background:
         drawAssets(gl, 0, 0, 0, 1.18);
         //The Game:
