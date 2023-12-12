@@ -277,7 +277,6 @@ class frameHelper implements GLEventListener, KeyListener, MouseListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
- //Single player:
         if (Variables.player1_Win.exp && Variables.current_Maze == 2) {
             //Game levels successfully passed by player1, save game data and re-initialize everything used:
             if (Variables.player1 == null || Variables.player1.isEmpty()) {
